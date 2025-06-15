@@ -8,8 +8,13 @@ import filtersort.DAO.BukuDAO;
 import filtersort.DAO.KategoriDAO;
 import filtersort.Model.Buku;
 import filtersort.Model.Kategori;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -104,19 +109,23 @@ public class MainController implements Initializable {
     
     @FXML
     private TableColumn<Buku, String> colTgl;
-    
+//    Button
     @FXML
     private Button btnCari;
     @FXML
     private Button btnAdd;
-    
     @FXML
     private Button btnUpdate;
-     
     @FXML
     private Button btnDelete;
+    @FXML
+    private Button btnOpen;
+    @FXML
+    private Button btnSaveAs;
+    @FXML
+    private Button btnSave;
      
-
+//Atribut form
     @FXML
     private TextField txtCariJudul; 
     @FXML
@@ -139,16 +148,58 @@ public class MainController implements Initializable {
     
     @FXML
     private DatePicker dpcSampai;
-        
-private BukuDAO BukuDAO; 
-@FXML
-private void loadDataBuku() {
-    BukuDAO = new BukuDAO(); 
-    ObservableList<Buku> bukuList = FXCollections.observableArrayList(BukuDAO.getBuku());
-    Tblbuku.setItems(bukuList);
-       
-}
+    
+     @FXML
+    private ComboBox<Kategori>  comboxKategori;
+    
     @FXML
+    private ComboBox<Kategori>  comboxFilterKategori;
+    
+    @FXML
+    private ComboBox<String>  comboxSorting;
+    
+    
+    //    Import data ke database
+    @FXML
+    private void handleButtonSave(ActionEvent event) throws IOException {
+        ObservableList<Buku> bukuList = Tblbuku.getItems();
+
+        
+        BufferedWriter writer = new BufferedWriter(
+            new FileWriter("storage/data_buku.csv")
+        );
+
+        for (Buku buku : bukuList) {
+            writer.write(buku.getKd_buku() + "," +
+                         buku.getKode_kategori()+ "," +
+                         buku.getJudul()+ "," +
+                         buku.getNama_kategori()+ "," +
+                         buku.getTanggal()+ "," +
+                         buku.getPengarang()+ "," +
+                         buku.getPenerbit()+ "," +
+                         buku.getEdisi()+ "," +
+                         buku.getTahun_terbit() + "\n");
+        }
+
+        writer.close();
+    }
+
+
+    
+    
+        
+//    Untuk Load data buku ke view
+    private BukuDAO BukuDAO; 
+
+    @FXML
+    private void loadDataBuku() {
+        BukuDAO = new BukuDAO(); 
+        ObservableList<Buku> bukuList = FXCollections.observableArrayList(BukuDAO.getBuku());
+        Tblbuku.setItems(bukuList);
+
+    }
+    //    Untuk Load kategori buku kecombo box
+   @FXML
    private KategoriDAO KategoriDAO; 
     
    @FXML
@@ -159,14 +210,7 @@ private void loadDataBuku() {
     comboxFilterKategori.setItems(kategoriList);  
     }
     
-    @FXML
-    private ComboBox<Kategori>  comboxKategori;
-    
-    @FXML
-    private ComboBox<Kategori>  comboxFilterKategori;
-    
-    @FXML
-    private ComboBox<String>  comboxSorting;
+   
     
     
     private void initComboboxSorting() {
@@ -439,6 +483,11 @@ private void deleteBuku() {
         }
     }
 }
+
+
+
+
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
           initComboboxSorting();
