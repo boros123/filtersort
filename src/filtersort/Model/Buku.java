@@ -20,15 +20,15 @@ public class Buku {
     private String nama_kategori;
 
 
-    public Buku(String kd_buku,String judul,String pengarang,String penerbit,String tahun_terbit,String edisi,String kode_kategori,String nama_kategori,String tanggal) {
+    public Buku(String kd_buku,String judul,String kode_kategori,String nama_kategori,String pengarang,String penerbit,String tahun_terbit,String edisi,String tanggal) {
         this.kd_buku=kd_buku;
         this.judul = judul;  
+            this.kode_kategori=kode_kategori;
+            this.nama_kategori=nama_kategori;
          this.pengarang = pengarang;  
           this.penerbit = penerbit;  
            this.tahun_terbit = tahun_terbit; 
             this.edisi = edisi;
-            this.kode_kategori=kode_kategori;
-            this.nama_kategori=nama_kategori;
             this.tanggal=tanggal;
     }
     
@@ -43,7 +43,9 @@ public class Buku {
             this.tanggal=tanggal;
            
     }
-
+//    konstruktor kosong untuk imporport
+public Buku() {
+}
     public String getKd_buku() {
         return kd_buku;
     }

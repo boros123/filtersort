@@ -15,17 +15,30 @@ import javafx.stage.Stage;
  * @author Lenovo
  */
 public class Main extends Application {
-    
+    private static Stage primaryStage;
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/filtersort/View/Main.fxml"));
+        primaryStage = stage;
+        Parent root = FXMLLoader.load(getClass().getResource("/filtersort/View/Login.fxml"));
         
         Scene scene = new Scene(root);
         
+        stage.setTitle("Login");
         stage.setScene(scene);
         stage.show();
     }
+public static void changeScene(String fxmlFile, String title) throws Exception {
+    Parent newRoot = FXMLLoader.load(Main.class.getResource(fxmlFile));
 
+    // mengambil ukuran root container pada file fxml
+    double width = newRoot.prefWidth(-1);  // -1 nilai preferensi
+    double height = newRoot.prefHeight(-1); // -1 nilai preferensi
+
+    primaryStage.getScene().setRoot(newRoot);
+    primaryStage.setWidth(width);
+    primaryStage.setHeight(height);
+    primaryStage.setTitle(title);
+}
     /**
      * @param args the command line arguments
      */

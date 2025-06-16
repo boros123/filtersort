@@ -20,7 +20,7 @@ import javafx.collections.ObservableList;
 public class BukuDAO {
     public static String filterTanggalDari = null;     // Filter tanggal mulai pengadaan
     public static String filterTanggalSampai = null;   // Filter tanggal akhir pengadaan
-    public static String filterJudul = null;           // Filter judul buku (partial match)
+    public static String filterJudul = null;     // Filter judul buku (partial match)
     public static String filterKategori = null; 
       public static String sortingOption = "";
     
@@ -39,8 +39,9 @@ public static ObservableList<Buku> getBuku() {
     }
 
 
-    if (filterJudul != null && !filterJudul.isEmpty()) {
-        sql += " AND buku.judul LIKE '%" + filterJudul + "%'";
+    if (filterJudul != null && !filterJudul.isEmpty() ) {
+        sql += " AND (buku.judul LIKE '%" + filterJudul + "%' OR buku.pengarang LIKE '%" + filterJudul + "%')";
+
     }
 
     if (filterKategori != null && !filterKategori.isEmpty()) {
@@ -74,15 +75,15 @@ public static ObservableList<Buku> getBuku() {
         while (rs.next()) {
             String kd_buku = rs.getString("kd_buku");
             String judul = rs.getString("judul");
+            String kode_kategori = rs.getString("kode_kategori");
+            String nama_kategori = rs.getString("nama_kategori");
             String pengarang = rs.getString("pengarang");
             String penerbit = rs.getString("penerbit");
             String tahun_terbit = rs.getString("tahun_terbit");
             String edisi = rs.getString("edisi");
-            String kode_kategori = rs.getString("kode_kategori");
-            String nama_kategori = rs.getString("nama_kategori");
             String tanggal = rs.getString("tanggal");
 
-            bukuList.add(new Buku(kd_buku, judul, pengarang, penerbit, tahun_terbit, edisi, kode_kategori, nama_kategori, tanggal));
+            bukuList.add(new Buku(kd_buku, judul, kode_kategori ,nama_kategori,pengarang, penerbit, tahun_terbit, edisi, tanggal));
         }
 
         rs.close();
@@ -95,10 +96,38 @@ public static ObservableList<Buku> getBuku() {
 
     return bukuList;
 }
+//Generate kode baru secara berurutan
+    public static String generateKodeBuku() {
+    String kodeBaru = "B00001"; // default jika tabel masih kosong
+    String query = "SELECT kd_buku FROM buku ORDER BY kd_buku DESC LIMIT 1";
 
-    
+    try {
+        Connection koneksi = DBConnection.getConnection();
+        Statement stmt = koneksi.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+
+        if (rs.next()) {
+//            cek kode  buku yang paling terakhir 
+            String lastKode = rs.getString("kd_buku");
+//            menambahkan satu angka berdasarkan hasil cek kode buku terakhir
+            int nomor = Integer.parseInt(lastKode.substring(1)) + 1;
+//            format untuk jika digit 0 di depan kurang,panjang digit 5, dan untuk tipe nya integer  
+            kodeBaru = String.format("B%05d", nomor); // hasil "B00013"
+        }
+
+        rs.close();
+        stmt.close();
+        koneksi.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return kodeBaru;
+}
     public static void addBuku(Buku buku) {
-        String query = "INSERT INTO buku (kd_buku,judul,pengarang,penerbit,tahun_terbit,edisi,kode_kategori,tanggal) VALUES (?,?,?,?,?,?,?,?)";
+        String query = "INSERT INTO buku (kd_buku,judul,pengarang,penerbit,tahun_terbit,edisi,kode_kategori,tanggal) VALUES (?,?,?,?,?,?,?,?)" 
+                        + "ON DUPLICATE KEY UPDATE kd_buku = kd_buku";
+                ;
     
     try {
         Connection koneksi = DBConnection.getConnection();
