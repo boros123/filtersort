@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 15, 2025 at 06:47 PM
+-- Generation Time: Jun 17, 2025 at 07:06 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.2.18
 
@@ -141,7 +141,15 @@ INSERT INTO `buku` (`kd_buku`, `kode_kategori`, `judul`, `pengarang`, `penerbit`
 ('B00096', '400', 'Studi Kasus Bahasa', 'Joko S.', 'Erlangga', 2001, 1, '2018-04-04'),
 ('B00097', '000', 'Praktik Teknik', 'Fitri', 'Gramedia', 2003, 3, '2021-12-03'),
 ('B00098', '600', 'Pengenalan Sastra', 'Dewi', 'Erlangga', 2007, 4, '2012-06-18'),
-('B00099', '200', 'Analisis Bahasa', 'Joko M.', 'Gramedia', 2020, 2, '2015-11-01');
+('B00099', '200', 'Analisis Bahasa', 'Joko M.', 'Gramedia', 2020, 2, '2015-11-01'),
+('B00100', '100', 'Dilan 1991', 'Pidi Baiq', 'Sinar Gua', 2010, 1, '2025-06-16'),
+('500001', '500', 'Principles of Linguistics', 'Gary Watson', 'McGraw-Hill', 2012, 4, '2022-11-17'),
+('B00101', '700', 'Naruto Shipuden', 'Mashasi Kishimoto', 'Tokyo 7', 2004, 1, '2025-06-17'),
+('B00102', '000', 'Marmut Merah Jambu', 'Raditya Dika', 'Anonnymus', 2012, 5, '2025-06-16'),
+('B00103', '100', 'God Is Exist ?', 'Paulus Nobirc', 'Everest Chin', 1850, 3, '2025-06-17'),
+('400001', '400', 'Introduction to Mathematics', 'Phillip Bowman', 'Springer', 2011, 2, '2018-10-10'),
+('B00104', '700', 'Dragon Ballz', 'Kirishami', 'Rekishi', 2001, 1, '2025-06-18'),
+('B00105', '700', 'Initial D', 'Knowing', 'Miracle', 2000, 1, '2025-06-18');
 
 -- --------------------------------------------------------
 

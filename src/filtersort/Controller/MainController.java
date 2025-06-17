@@ -164,8 +164,7 @@ public class MainController implements Initializable {
     private ComboBox<String>  comboxSorting;
     @FXML
     private TextArea txtPesan;
-     @FXML
-    private Label NamaFile;
+   
     private File currentFile=null;
     
     @FXML
@@ -248,7 +247,7 @@ private void handleButtonOpen() {
 
             txtPesan.setText(content.toString());
             currentFile = selectedFile;
-            NamaFile.setText("File dipilih: " + selectedFile.getName());
+            
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -342,6 +341,7 @@ private void handleLogout(ActionEvent event) {
     Session.getInstance().setRole(null);
 
     try {
+        showAlertTrue("Logout", "Berhasil Logout");
         Main.changeScene("/filtersort/View/Login.fxml","Login");
     } catch (Exception e) {
         e.printStackTrace();
@@ -460,7 +460,7 @@ comboxSorting.setPromptText("Urutkan");
 private void clearFieldsArea() {
     txtPesan.clear();
     currentFile = null;
-    NamaFile.setText("");
+   
 }
 //untuk clear field setelah data berhasil di tambahkan
         private void clearFields() {

@@ -35,7 +35,8 @@ public static ObservableList<Buku> getBuku() {
     if (filterTanggalDari != null && filterTanggalSampai != null
     && !filterTanggalDari.isEmpty() && !filterTanggalSampai.isEmpty()) {
     sql += " AND buku.tanggal BETWEEN '"
-         + filterTanggalDari + "' AND '" + filterTanggalSampai + "' ";
+         + filterTanggalDari + "' AND '" + filterTanggalSampai + "' "
+          + "ORDER BY buku.tanggal DESC ";
     }
 
 
